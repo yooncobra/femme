@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="UTF-8">
+  <title>Femme</title>
+</head>
+<body>
+팜므어 번역기
+
+<textarea rows="4" class="femme" placeholder="팜므어로 변형할 문장을 넣어주세요."></textarea>
+
+<button type="button" class='change'>변환</button>
+
+<div class='result'></div>
+
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="hangul.js" type="text/javascript"></script>
+
+<script>
+var test = "완료";
+
+var femme = function(str) {
+  return str.split('').map(function(char) {
+  var d = Hangul.disassemble(char);
+  if (d[3] && Hangul.isVowel(d[1]) && Hangul.isVowel(d[2])) {
+    var tmp = d[3];
+    d[3] = d[2];
+    d[2] = tmp;
+  }
+  return Hangul.assemble(d);
+  }).join('');
+};
+
+// for(var i=o; i<test, length; i++) {
+
+
+console.log(femme("완료"));
+
+$(function() {
+  $('button').click(function() {
+    console.log(femme($('.femme').val()));
+    $('.result').text(femme($('.femme').val()));
+  });
+});
+
+
+</script>
+</body>
+</html>
